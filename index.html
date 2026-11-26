@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sarkari — State & Central Schemes</title>
+<meta name="description" content="Find State and Central Government schemes, eligibility, documents and official portals in one place.">
+<style>
+  :root{
+    --navy:#0f172a; --blue:#1d4ed8; --blue-soft:#eff4ff; --saffron:#ff9933; --green:#138808;
+    --bg:#f4f6fb; --card:#ffffff; --text:#1e293b; --muted:#64748b; --line:#e2e8f0;
+    --central:#1d4ed8; --state:#b45309;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+  .flagbar{height:5px;background:linear-gradient(90deg,var(--saffron) 33%,#fff 33% 66%,var(--green) 66%)}
+  header{background:linear-gradient(135deg,var(--navy),#1e40af);color:#fff;padding:28px 20px 90px;position:relative}
+  .head-top{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600}
+  .lang{display:flex;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px}
+  .lang button{background:none;border:0;color:#fff;padding:6px 14px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer}
+  .lang button.on{background:#fff;color:var(--navy)}
+  .hero{max-width:760px;margin:26px auto 0;text-align:center}
+  .hero h1{font-size:clamp(30px,6vw,46px);letter-spacing:-.5px}
+  .hero p{margin-top:12px;font-size:16px;opacity:.92}
+  main{max-width:1080px;margin:-62px auto 0;padding:0 16px 40px;position:relative}
+  .filters{background:var(--card);border-radius:18px;padding:20px;box-shadow:0 10px 30px rgba(15,23,42,.12);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end}
+  label{display:block;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  select,input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:15px;background:#fff;color:var(--text);font-family:inherit}
+  select:focus,input:focus{outline:2px solid var(--blue);border-color:transparent}
+  .btn{padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:#f8fafc;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;color:var(--text)}
+  .btn:hover{background:#eef2f7}
+  .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:22px 0 14px}
+  .tabs{display:flex;background:#e8edf5;border-radius:14px;padding:4px;gap:2px}
+  .tabs button{border:0;background:none;padding:9px 16px;border-radius:11px;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit}
+  .tabs button.on{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+  .count{background:#fff;border:1px solid var(--line);padding:8px 16px;border-radius:999px;font-weight:700;font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:.15s}
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,23,42,.1);border-color:#c7d2fe}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--blue-soft);color:var(--blue)}
+  .tag.state{background:#fff4e5;color:var(--state)}
+  .tag.cat{background:#f1f5f9;color:var(--muted)}
+  .card h3{font-size:17px;line-height:1.3}
+  .card p{font-size:14px;color:var(--muted);flex:1}
+  .more{font-size:14px;font-weight:700;color:var(--blue)}
+  .empty{grid-column:1/-1;text-align:center;padding:50px 16px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:16px}
+  .overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+  .overlay.open{display:flex}
+  .modal{background:#fff;border-radius:20px;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:26px;position:relative}
+  .close{position:absolute;top:14px;right:16px;border:0;background:#f1f5f9;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer}
+  .modal h2{font-size:22px;margin:10px 40px 6px 0;line-height:1.3}
+  .modal .sum{color:var(--muted);margin-bottom:14px}
+  .modal h4{margin:16px 0 6px;font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--blue)}
+  .modal ul{padding-left:20px;font-size:15px}
+  .modal li{margin:3px 0}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+  .primary{background:var(--blue);color:#fff;border:0;text-decoration:none;display:inline-block}
+  .primary:hover{background:#1e40af}
+  footer{max-width:1080px;margin:0 auto;padding:22px 16px 40px;text-align:center;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="flagbar"></div>
+<header>
+  <div class="head-top">
+    <span class="pill" id="t-pill"></span>
+    <div class="lang" id="lang">
+      <button data-l="en" class="on">English</button>
+      <button data-l="hi">हिन्दी</button>
+      <button data-l="mr">मराठी</button>
+    </div>
+  </div>
+  <div class="hero">
+    <h1>🇮🇳 Sarkari</h1>
+    <p id="t-sub"></p>
+  </div>
+</header>
+
+<main>
+  <section class="filters">
+    <div><label id="t-state" for="state"></label><select id="state"></select></div>
+    <div><label id="t-cat" for="cat"></label><select id="cat"></select></div>
+    <div><label id="t-search" for="q"></label><input type="search" id="q"></div>
+    <div><button class="btn" id="reset" style="width:100%"></button></div>
+  </section>
+
+  <div class="bar">
+    <div class="tabs" id="tabs">
+      <button data-t="all" class="on"></button>
+      <button data-t="central"></button>
+      <button data-t="state"></button>
+    </div>
+    <div class="count" id="count"></div>
+  </div>
+
+  <section class="grid" id="grid"></section>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="close" id="close" aria-label="Close">✕</button>
+    <div class="tags" id="m-tags"></div>
+    <h2 id="m-title"></h2>
+    <p class="sum" id="m-sum"></p>
+    <h4 id="t-ben"></h4><ul id="m-ben"></ul>
+    <h4 id="t-eli"></h4><ul id="m-eli"></ul>
+    <h4 id="t-doc"></h4><ul id="m-doc"></ul>
+    <div class="actions">
+      <a class="btn primary" id="m-portal" target="_blank" rel="noopener noreferrer"></a>
+      <button class="btn" id="m-copy"></button>
+    </div>
+  </div>
+</div>
+
+<footer id="t-disc"></footer>
+
+<script>
+/* ============================================================
+   1) TRANSLATIONS (interface text only)
+   ============================================================ */
+const I18N = {
+  en: {
+    pill:"State + Central Yojana Directory",
+    sub:"Select your State to explore both State and Central Government schemes, eligibility, documents, and official portals in one place.",
+    selState:"Select State", allStates:"All States (Central + All States)",
+    selCat:"Select Category", allCats:"All Categories",
+    search:"Keyword Search", ph:"Scheme name, pension, loan, solar…",
+    reset:"Reset Filters", all:"All Schemes", central:"Central Govt", state:"State Govt",
+    ben:"Benefits", eli:"Eligibility", doc:"Required Documents",
+    portal:"Official Portal ↗", copy:"Copy Link", copied:"Copied!",
+    count:n=>`${n} scheme${n===1?"":"s"} found`,
+    none:"No schemes found. Try changing the filters.",
+    badgeC:"Central", badgeS:"State",
+    disc:"<b>Disclaimer:</b> This is an informational directory and is not affiliated with any government body. Amounts and rules change often, so always verify details and apply on official government portals."
+  },
+  hi: {
+    pill:"राज्य + केंद्र योजना निर्देशिका",
+    sub:"अपना राज्य चुनें और राज्य व केंद्र सरकार की योजनाएँ, पात्रता, दस्तावेज़ और आधिकारिक पोर्टल एक ही जगह देखें।",
+    selState:"राज्य चुनें", allStates:"सभी राज्य (केंद्र + सभी राज्य)",
+    selCat:"श्रेणी चुनें", allCats:"सभी श्रेणियाँ",
+    search:"खोजें", ph:"योजना का नाम, पेंशन, लोन, सोलर…",
+    reset:"फ़िल्टर रीसेट करें", all:"सभी योजनाएँ", central:"केंद्र सरकार", state:"राज्य सरकार",
+    ben:"लाभ", eli:"पात्रता", doc:"आवश्यक दस्तावेज़",
+    portal:"आधिकारिक पोर्टल ↗", copy:"लिंक कॉपी करें", copied:"कॉपी हो गया!",
+    count:n=>`${n} योजनाएँ मिलीं`,
+    none:"कोई योजना नहीं मिली। फ़िल्टर बदलकर देखें।",
+    badgeC:"केंद्र", badgeS:"राज्य",
+    disc:"<b>अस्वीकरण:</b> यह केवल जानकारी देने वाली निर्देशिका है और किसी सरकारी निकाय से संबद्ध नहीं है। राशि और नियम बदलते रहते हैं, इसलिए हमेशा आधिकारिक सरकारी पोर्टल पर जाँच करें और वहीं आवेदन करें।"
+  },
+  mr: {
+    pill:"राज्य + केंद्र योजना निर्देशिका",
+    sub:"तुमचे राज्य निवडा आणि राज्य व केंद्र सरकारच्या योजना, पात्रता, कागदपत्रे आणि अधिकृत पोर्टल एकाच ठिकाणी पहा.",
+    selState:"राज्य निवडा", allStates:"सर्व राज्ये (केंद्र + सर्व राज्ये)",
+    selCat:"श्रेणी निवडा", allCats:"सर्व श्रेणी",
+    search:"शोधा", ph:"योजनेचे नाव, पेन्शन, कर्ज, सोलर…",
+    reset:"फिल्टर रीसेट करा", all:"सर्व योजना", central:"केंद्र सरकार", state:"राज्य सरकार",
+    ben:"लाभ", eli:"पात्रता", doc:"आवश्यक कागदपत्रे",
+    portal:"अधिकृत पोर्टल ↗", copy:"लिंक कॉपी करा", copied:"कॉपी झाले!",
+    count:n=>`${n} योजना सापडल्या`,
+    none:"योजना सापडल्या नाहीत. फिल्टर बदलून पहा.",
+    badgeC:"केंद्र", badgeS:"राज्य",
+    disc:"<b>सूचना:</b> ही फक्त माहिती देणारी निर्देशिका आहे आणि कोणत्याही सरकारी संस्थेशी संलग्न नाही. रक्कम व नियम बदलत असतात, म्हणून नेहमी अधिकृत सरकारी पोर्टलवर तपासा आणि तिथेच अर्ज करा."
+  }
+};
+
+const STATES = {
+  GOA:{en:"Goa",hi:"गोवा",mr:"गोवा"},
+  MH:{en:"Maharashtra",hi:"महाराष्ट्र",mr:"महाराष्ट्र"},
+  UP:{en:"Uttar Pradesh",hi:"उत्तर प्रदेश",mr:"उत्तर प्रदेश"},
+  BR:{en:"Bihar",hi:"बिहार",mr:"बिहार"},
+  MP:{en:"Madhya Pradesh",hi:"मध्य प्रदेश",mr:"मध्य प्रदेश"},
+  RJ:{en:"Rajasthan",hi:"राजस्थान",mr:"राजस्थान"},
+  GJ:{en:"Gujarat",hi:"गुजरात",mr:"गुजरात"},
+  KA:{en:"Karnataka",hi:"कर्नाटक",mr:"कर्नाटक"},
+  DL:{en:"Delhi",hi:"दिल्ली",mr:"दिल्ली"}
+};
+
+const CATS = {
+  women:{en:"Women & Child",hi:"महिला एवं बाल",mr:"महिला व बाल"},
+  farmers:{en:"Farmers & Agriculture",hi:"किसान एवं कृषि",mr:"शेतकरी व शेती"},
+  health:{en:"Health & Insurance",hi:"स्वास्थ्य एवं बीमा",mr:"आरोग्य व विमा"},
+  students:{en:"Students & Education",hi:"विद्यार्थी एवं शिक्षा",mr:"विद्यार्थी व शिक्षण"},
+  housing:{en:"Housing & Solar",hi:"आवास एवं सोलर",mr:"घर व सोलर"},
+  business:{en:"Business, Loans & Youth",hi:"व्यापार, लोन एवं युवा",mr:"व्यवसाय, कर्ज व युवा"}
+};
+
+/* ============================================================
+   2) SCHEMES DATA
+   state: "CENTRAL" for central schemes, otherwise a key from STATES.
+   NOTE: Amounts and rules change. Re-check each official portal
+   before publishing and update this list regularly.
+   ============================================================ */
+const SCHEMES = [
+  /* ---------------- CENTRAL ---------------- */
+  {id:"pm-kisan", state:"CENTRAL", cat:"farmers",
+   name:"PM-KISAN Samman Nidhi",
+   summary:"Direct income support to farmer families, paid straight into the bank account.",
+   benefits:["₹6,000 per year, paid in three instalments of ₹2,000","Money is sent by Direct Benefit Transfer (DBT)"],
+   eligibility:["Farmer family owning cultivable land","Certain categories (such as income tax payers and institutional landholders) are excluded","e-KYC and land seeding must be completed"],
+   documents:["Aadhaar card","Land ownership records","Bank account passbook","Mobile number linked to Aadhaar"],
+   portal:"https://pmkisan.gov.in"},
+
+  {id:"pmfby", state:"CENTRAL", cat:"farmers",
+   name:"PM Fasal Bima Yojana (Crop Insurance)",
+   summary:"Insurance cover against crop loss from natural calamities, pests and diseases.",
+   benefits:["Compensation for notified crop loss","Farmers pay a low fixed premium: 2% (Kharif), 1.5% (Rabi), 5% (commercial/horticulture crops)","The rest of the premium is shared by government"],
+   eligibility:["Farmers growing notified crops in notified areas","Both owner and tenant farmers can apply","Apply before the cut-off date of each season"],
+   documents:["Aadhaar card","Land records or tenancy proof","Bank account details","Sowing declaration"],
+   portal:"https://pmfby.gov.in"},
+
+  {id:"pmjay", state:"CENTRAL", cat:"health",
+   name:"Ayushman Bharat PM-JAY",
+   summary:"Free hospital treatment cover for eligible families at empanelled hospitals.",
+   benefits:["Health cover of up to ₹5 lakh per family per year","Cashless treatment for hospitalisation","Senior citizens aged 70+ are also covered under the extended Ayushman Vay Vandana card"],
+   eligibility:["Families identified through SECC data or state lists","Senior citizens aged 70 and above (Vay Vandana)","Check eligibility on the portal using mobile number or ration card"],
+   documents:["Aadhaar card","Ration card","Mobile number","Any government photo ID"],
+   portal:"https://pmjay.gov.in"},
+
+  {id:"pmay-g", state:"CENTRAL", cat:"housing",
+   name:"PM Awas Yojana – Gramin",
+   summary:"Financial help to build a pucca house for rural families without proper housing.",
+   benefits:["Assistance of ₹1.20 lakh in plains and ₹1.30 lakh in hilly/difficult areas","Support for toilet construction and 90/95 days of MGNREGA wages may be linked"],
+   eligibility:["Rural household that is houseless or lives in a kutcha/dilapidated house","Selected through Awaas+ survey / Gram Sabha list","Should not already own a pucca house"],
+   documents:["Aadhaar card","Bank account details","Job card (if available)","Land or residence proof"],
+   portal:"https://pmayg.nic.in"},
+
+  {id:"surya-ghar", state:"CENTRAL", cat:"housing",
+   name:"PM Surya Ghar Muft Bijli Yojana",
+   summary:"Subsidy for installing rooftop solar panels at home to cut electricity bills.",
+   benefits:["Central subsidy of ₹30,000 per kW up to 2 kW and ₹18,000 for the additional 1 kW (maximum ₹78,000)","Up to 300 units of free electricity per month, depending on system size","Low-interest bank loans are available"],
+   eligibility:["Indian household with a valid electricity connection","Roof suitable for solar panels","Should not have taken another solar subsidy"],
+   documents:["Latest electricity bill","Aadhaar card","Bank account details","Roof ownership or consent proof"],
+   portal:"https://pmsuryaghar.gov.in"},
+
+  {id:"sukanya", state:"CENTRAL", cat:"women",
+   name:"Sukanya Samriddhi Yojana",
+   summary:"Small savings account for the future education and marriage expenses of a girl child.",
+   benefits:["Interest rate is set by the government every quarter","Minimum deposit ₹250 and maximum ₹1.5 lakh per financial year","Tax benefits are available as per the income tax rules in force"],
+   eligibility:["Girl child below 10 years of age","Opened by parent or legal guardian","Maximum two accounts per family (exceptions for twins/triplets)"],
+   documents:["Girl's birth certificate","Parent/guardian ID and address proof","Passport-size photos"],
+   portal:"https://www.indiapost.gov.in"},
+
+  {id:"pmmvy", state:"CENTRAL", cat:"women",
+   name:"PM Matru Vandana Yojana",
+   summary:"Cash support for pregnant and breastfeeding mothers to help with nutrition and rest.",
+   benefits:["₹5,000 in instalments for the first living child","₹6,000 for the second child if it is a girl"],
+   eligibility:["Pregnant women and lactating mothers","Registration of pregnancy at Anganwadi or health centre","Central/state government employees are generally not eligible"],
+   documents:["Aadhaar card","Mother and Child Protection (MCP) card","Bank/post office account details","Identity proof"],
+   portal:"https://pmmvy.wcd.gov.in"},
+
+  {id:"ujjwala", state:"CENTRAL", cat:"women",
+   name:"PM Ujjwala Yojana",
+   summary:"LPG gas connection for women from poor households, so they can stop cooking on firewood.",
+   benefits:["Deposit-free LPG connection","Support for the first refill and stove in many cases","Targeted subsidy on cylinders for eligible users"],
+   eligibility:["Adult woman from a poor/BPL-category household","No existing LPG connection in the household","Name should be in SECC/eligible lists or meet the category conditions"],
+   documents:["Aadhaar card","Ration card or BPL proof","Bank account details","Passport-size photo"],
+   portal:"https://www.pmuy.gov.in"},
+
+  {id:"mudra", state:"CENTRAL", cat:"business",
+   name:"PM Mudra Yojana",
+   summary:"Collateral-free loans for small and micro businesses like shops, printing, tailoring and services.",
+   benefits:["Loans up to ₹10 lakh without collateral","Shishu: up to ₹50,000, Kishor: ₹50,000 to ₹5 lakh, Tarun: ₹5 lakh to ₹10 lakh","Available from banks, small finance banks and NBFCs"],
+   eligibility:["Indian citizen with a non-farm business plan or an existing small business","Should not be a defaulter with any bank","Business can be manufacturing, trading or services"],
+   documents:["Aadhaar and PAN","Business address proof","Quotation of machinery or goods to buy","Bank statements"],
+   portal:"https://www.mudra.org.in"},
+
+  {id:"standup", state:"CENTRAL", cat:"business",
+   name:"Stand-Up India",
+   summary:"Bank loans for women and SC/ST entrepreneurs starting a new business.",
+   benefits:["Loans between ₹10 lakh and ₹1 crore","For a new (greenfield) enterprise in manufacturing, services or trading"],
+   eligibility:["Woman or SC/ST entrepreneur above 18 years","First-time venture","Not a defaulter to any bank"],
+   documents:["Aadhaar and PAN","Caste certificate (for SC/ST applicants)","Project report","Business address proof"],
+   portal:"https://www.standupmitra.in"},
+
+  {id:"svanidhi", state:"CENTRAL", cat:"business",
+   name:"PM SVANidhi (Street Vendors)",
+   summary:"Low-cost working capital loan for street vendors, with rewards for repaying on time.",
+   benefits:["First loan of ₹10,000, then ₹20,000 and ₹50,000 on timely repayment","Interest subsidy and cashback on digital payments"],
+   eligibility:["Street vendors who were vending on or before the cut-off date","Certificate of Vending or Letter of Recommendation from the local body"],
+   documents:["Aadhaar card","Vending certificate or LoR","Bank account details","Mobile number"],
+   portal:"https://pmsvanidhi.mohua.gov.in"},
+
+  {id:"vishwakarma", state:"CENTRAL", cat:"business",
+   name:"PM Vishwakarma",
+   summary:"Support for traditional artisans and craftspeople: training, tools and low-interest loans.",
+   benefits:["Training with a daily stipend","Toolkit incentive of ₹15,000","Collateral-free loan of ₹1 lakh, then ₹2 lakh, at a concessional 5% interest rate"],
+   eligibility:["Artisan or craftsperson in a listed trade, working with hands and tools","Age 18 or above","Not availed a similar scheme loan in the recent past"],
+   documents:["Aadhaar card","Mobile number linked to Aadhaar","Bank account details","Ration card (if available)"],
+   portal:"https://pmvishwakarma.gov.in"},
+
+  {id:"nsp", state:"CENTRAL", cat:"students",
+   name:"National Scholarship Portal (NSP)",
+   summary:"One portal to apply for many central and state scholarships for school and college students.",
+   benefits:["Pre-matric, post-matric and merit-cum-means scholarships","Amount depends on the scholarship, course and category"],
+   eligibility:["Students with the required marks and family income limit set for each scholarship","Studying in a recognised institution","Category conditions apply (SC/ST/OBC/minority/other)"],
+   documents:["Aadhaar card","Previous year marksheet","Income certificate","Caste certificate (if applicable)","Bank account details","Bonafide certificate from institute"],
+   portal:"https://scholarships.gov.in"},
+
+  /* ---------------- MAHARASHTRA ---------------- */
+  {id:"mh-ladki-bahin", state:"MH", cat:"women",
+   name:"Mukhyamantri Majhi Ladki Bahin Yojana",
+   summary:"Monthly financial help for eligible women of Maharashtra.",
+   benefits:["₹1,500 per month directly to the bank account"],
+   eligibility:["Resident woman of Maharashtra aged roughly 21 to 65 years","Family annual income up to ₹2.5 lakh","Bank account linked with Aadhaar","Rules are revised from time to time, so check the latest on the portal"],
+   documents:["Aadhaar card","Domicile or ration card","Income proof (if required)","Bank passbook","Passport-size photo"],
+   portal:"https://ladakibahin.maharashtra.gov.in"},
+
+  {id:"mh-mjpjay", state:"MH", cat:"health",
+   name:"Mahatma Jyotirao Phule Jan Arogya Yojana",
+   summary:"Cashless treatment for serious illnesses at empanelled hospitals in Maharashtra.",
+   benefits:["Cashless cover for listed surgeries and therapies, integrated with Ayushman Bharat","Cover of up to ₹5 lakh per family per year"],
+   eligibility:["Families holding the eligible ration cards (such as yellow, orange or white card in notified districts)","Farmer families in some districts","Details on the portal"],
+   documents:["Ration card","Aadhaar card","Photo ID","Hospital referral (where needed)"],
+   portal:"https://www.jeevandayee.gov.in"},
+
+  {id:"mh-namo-shetkari", state:"MH", cat:"farmers",
+   name:"Namo Shetkari Mahasanman Nidhi",
+   summary:"State top-up support for farmers who already get PM-KISAN.",
+   benefits:["₹6,000 per year from the state, in addition to PM-KISAN"],
+   eligibility:["Farmers of Maharashtra who are PM-KISAN beneficiaries","e-KYC and bank linking completed"],
+   documents:["Aadhaar card","Land records (7/12 extract)","Bank account details","PM-KISAN registration details"],
+   portal:"https://www.maharashtra.gov.in"},
+
+  /* ---------------- GOA ---------------- */
+  {id:"goa-griha-aadhar", state:"GOA", cat:"women",
+   name:"Griha Aadhar Yojana",
+   summary:"Monthly financial support for housewives of Goa.",
+   benefits:["₹1,500 per month as financial assistance"],
+   eligibility:["Married woman residing in Goa for the required number of years","Family income limit applies","Not eligible if already getting similar government pension"],
+   documents:["Aadhaar card","Residence/domicile certificate","Marriage certificate or proof","Income certificate","Bank passbook"],
+   portal:"https://www.goa.gov.in"},
+
+  {id:"goa-laadli-laxmi", state:"GOA", cat:"women",
+   name:"Laadli Laxmi Yojana",
+   summary:"Financial assistance for girls of Goa towards education and marriage.",
+   benefits:["₹1 lakh paid to the girl on completing the conditions of the scheme"],
+   eligibility:["Girl who is a resident of Goa","Family income limit as set by the scheme","Girl should meet the age and education conditions"],
+   documents:["Birth certificate","Aadhaar card","Residence proof","Income certificate","Bank account details"],
+   portal:"https://www.goa.gov.in"},
+
+  /* ---------------- UTTAR PRADESH ---------------- */
+  {id:"up-kanya-sumangala", state:"UP", cat:"women",
+   name:"Mukhyamantri Kanya Sumangala Yojana",
+   summary:"Stage-wise financial help for girl children of Uttar Pradesh, from birth to graduation.",
+   benefits:["Total assistance of ₹25,000 paid in stages: at birth, vaccination, school admission, and later classes up to graduation"],
+   eligibility:["Girl child born in a family resident in Uttar Pradesh","Family annual income below the limit set by the scheme","Up to two daughters per family"],
+   documents:["Girl's birth certificate","Aadhaar card","Income certificate","Domicile certificate","Bank account details"],
+   portal:"https://mksy.up.gov.in"},
+
+  /* ---------------- BIHAR ---------------- */
+  {id:"br-kanya-utthan", state:"BR", cat:"students",
+   name:"Mukhyamantri Kanya Utthan Yojana",
+   summary:"Incentive for girls of Bihar to continue studies after school and avoid early marriage.",
+   benefits:["Cash incentives at stages from birth to graduation, up to ₹50,000 on graduation"],
+   eligibility:["Girl who is a permanent resident of Bihar","Passes the required class or graduation level","Unmarried at the time of applying (as per scheme rules)"],
+   documents:["Aadhaar card","Residence certificate","Marksheet or passing certificate","Bank account details"],
+   portal:"https://state.bihar.gov.in"},
+
+  {id:"br-student-credit", state:"BR", cat:"students",
+   name:"Bihar Student Credit Card Yojana",
+   summary:"Education loan for higher studies for Bihar students, without collateral.",
+   benefits:["Education loan of up to ₹4 lakh at concessional interest","No collateral needed for the loan"],
+   eligibility:["Resident of Bihar who passed Class 12 in or after the year set by the scheme","Admission in a recognised institution for higher education","Age limit as per scheme"],
+   documents:["Aadhaar card","Class 10 and 12 marksheets","Admission proof","Bank account details","Passport-size photo"],
+   portal:"https://www.7nishchay-yuvaupmission.bihar.gov.in"},
+
+  /* ---------------- MADHYA PRADESH ---------------- */
+  {id:"mp-ladli-behna", state:"MP", cat:"women",
+   name:"Mukhyamantri Ladli Behna Yojana",
+   summary:"Monthly financial help to women of Madhya Pradesh.",
+   benefits:["Monthly assistance, ₹1,250 per month as per the latest announced amount"],
+   eligibility:["Married woman of Madhya Pradesh aged 21 to 60 years","Family income below ₹2.5 lakh per year","Family should not be income tax payers"],
+   documents:["Aadhaar card","Samagra ID","Bank passbook linked with Aadhaar","Income proof (if required)"],
+   portal:"https://cmladlibahna.mp.gov.in"},
+
+  {id:"mp-kisan-kalyan", state:"MP", cat:"farmers",
+   name:"Mukhyamantri Kisan Kalyan Yojana",
+   summary:"State top-up for farmers of Madhya Pradesh who get PM-KISAN.",
+   benefits:["₹6,000 per year from the state, on top of PM-KISAN"],
+   eligibility:["Farmers of Madhya Pradesh who receive PM-KISAN","Land and bank details verified"],
+   documents:["Aadhaar card","Samagra ID","Land records","Bank account details"],
+   portal:"https://mp.gov.in"},
+
+  /* ---------------- RAJASTHAN ---------------- */
+  {id:"rj-pension", state:"RJ", cat:"women",
+   name:"Mukhyamantri Samajik Suraksha Pension Yojana",
+   summary:"Monthly pension for elderly, widows, single women and persons with disability in Rajasthan.",
+   benefits:["Monthly pension; the amount depends on category and age"],
+   eligibility:["Resident of Rajasthan","Elderly, widow, single woman, divorced woman or person with disability as per rules","Income and other conditions as per category"],
+   documents:["Aadhaar card","Jan Aadhaar card","Age proof","Death certificate of husband (for widows)","Disability certificate (if applicable)","Bank account details"],
+   portal:"https://sje.rajasthan.gov.in"},
+
+  /* ---------------- GUJARAT ---------------- */
+  {id:"gj-vahali-dikri", state:"GJ", cat:"women",
+   name:"Vahali Dikri Yojana",
+   summary:"Staged financial help for daughters of Gujarat to support education and reduce early marriage.",
+   benefits:["₹4,000 at Class 1 admission","₹6,000 at Class 9 admission","₹1 lakh at the age of 18 years or on marriage (as per scheme conditions)"],
+   eligibility:["Daughter who is a resident of Gujarat","Family income within the limit set by the scheme","Maximum two daughters per family, as per scheme rules"],
+   documents:["Daughter's birth certificate","Parents' Aadhaar","Income certificate","School admission proof","Bank account details"],
+   portal:"https://wcd.gujarat.gov.in"},
+
+  {id:"gj-ma", state:"GJ", cat:"health",
+   name:"PMJAY-MA Yojana (Gujarat)",
+   summary:"Cashless treatment for serious illnesses for eligible families of Gujarat.",
+   benefits:["Health cover of up to ₹10 lakh per family per year in empanelled hospitals"],
+   eligibility:["Families holding the eligible MA card in Gujarat","Income and category limits apply"],
+   documents:["Aadhaar card","Income certificate","Ration card","Photo ID"],
+   portal:"https://www.magujarat.com"},
+
+  /* ---------------- KARNATAKA ---------------- */
+  {id:"ka-gruha-lakshmi", state:"KA", cat:"women",
+   name:"Gruha Lakshmi Yojana",
+   summary:"Monthly cash support to the woman head of the family in Karnataka.",
+   benefits:["₹2,000 per month into the bank account of the woman head of the family"],
+   eligibility:["Woman head of the family in Karnataka (as per ration card)","Not an income tax or GST payer in the family"],
+   documents:["Aadhaar card","Ration card","Bank passbook","Mobile number"],
+   portal:"https://sevasindhu.karnataka.gov.in"},
+
+  {id:"ka-gruha-jyothi", state:"KA", cat:"housing",
+   name:"Gruha Jyothi Yojana",
+   summary:"Free electricity up to a fixed monthly limit for households in Karnataka.",
+   benefits:["Free electricity up to 200 units per month, based on the household's average use"],
+   eligibility:["Domestic consumers in Karnataka","Tenants can also apply","Consumption limits apply"],
+   documents:["Electricity bill/account ID","Aadhaar card","Rent agreement (for tenants)"],
+   portal:"https://sevasindhu.karnataka.gov.in"},
+
+  {id:"ka-yuva-nidhi", state:"KA", cat:"business",
+   name:"Yuva Nidhi Yojana",
+   summary:"Monthly allowance for unemployed graduates and diploma holders of Karnataka.",
+   benefits:["₹3,000 per month for graduates and ₹1,500 per month for diploma holders, for up to 2 years or until they get a job"],
+   eligibility:["Karnataka resident who passed degree or diploma and remains unemployed for 6 months","Not pursuing higher studies, and not employed"],
+   documents:["Aadhaar card","Degree or diploma certificate","Residence proof","Bank account details"],
+   portal:"https://sevasindhu.karnataka.gov.in"},
+
+  /* ---------------- DELHI ---------------- */
+  {id:"dl-ladli", state:"DL", cat:"women",
+   name:"Delhi Ladli Scheme",
+   summary:"Financial help for girls born in Delhi, paid at birth and key education stages.",
+   benefits:["Amount at birth and at school admission and class milestones","Larger final payment when the girl turns 18 or passes Class 12, as per scheme conditions"],
+   eligibility:["Girl born in Delhi to parents residing in Delhi for the required years","Family income limit applies"],
+   documents:["Birth certificate","Parents' Aadhaar and Delhi residence proof","Income proof","Bank account details"],
+   portal:"https://wcd.delhi.gov.in"},
+
+  {id:"dl-pink-saheli", state:"DL", cat:"women",
+   name:"Pink Saheli Smart Card (Free Bus Travel)",
+   summary:"Free travel in Delhi government buses (DTC and cluster) for women residents.",
+   benefits:["Free bus travel for eligible women in Delhi's government buses"],
+   eligibility:["Woman resident of Delhi","Age and residence conditions as per the scheme"],
+   documents:["Aadhaar card or other photo ID","Delhi residence proof","Passport-size photo"],
+   portal:"https://dtc.delhi.gov.in"}
+];
+
+/* ============================================================
+   3) APP LOGIC
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let lang = "en";
+let tab = "all";
+try { lang = localStorage.getItem("sarkari_lang") || "en"; } catch(e){}
+if (!I18N[lang]) lang = "en";
+
+function t(){ return I18N[lang]; }
+
+/* ---- static text ---- */
+function renderStatic(){
+  const T = t();
+  document.documentElement.lang = lang;
+  $("t-pill").textContent = T.pill;
+  $("t-sub").textContent = T.sub;
+  $("t-state").textContent = T.selState;
+  $("t-cat").textContent = T.selCat;
+  $("t-search").textContent = T.search;
+  $("q").placeholder = T.ph;
+  $("reset").textContent = T.reset;
+  $("t-ben").textContent = T.ben;
+  $("t-eli").textContent = T.eli;
+  $("t-doc").textContent = T.doc;
+  $("m-portal").textContent = T.portal;
+  $("m-copy").textContent = T.copy;
+  $("t-disc").innerHTML = T.disc;
+  const tabBtns = $("tabs").querySelectorAll("button");
+  tabBtns[0].textContent = T.all;
+  tabBtns[1].textContent = T.central;
+  tabBtns[2].textContent = T.state;
+  document.querySelectorAll("#lang button").forEach(b => b.classList.toggle("on", b.dataset.l === lang));
+}
+
+/* ---- dropdowns (keeps current selection) ---- */
+function renderSelects(){
+  const T = t();
+  const sv = $("state").value || "ALL";
+  const cv = $("cat").value || "ALL";
+  $("state").innerHTML = `<option value="ALL">${esc(T.allStates)}</option>` +
+    Object.keys(STATES).map(k => `<option value="${k}">${esc(STATES[k][lang])}</option>`).join("");
+  $("cat").innerHTML = `<option value="ALL">${esc(T.allCats)}</option>` +
+    Object.keys(CATS).map(k => `<option value="${k}">${esc(CATS[k][lang])}</option>`).join("");
+  $("state").value = sv;
+  $("cat").value = cv;
+}
+
+/* ---- filtering ---- */
+function getFiltered(){
+  const st = $("state").value;
+  const ct = $("cat").value;
+  const q = $("q").value.trim().toLowerCase();
+  return SCHEMES.filter(s => {
+    // when a state is chosen, show Central schemes + that state's schemes
+    if (st !== "ALL" && s.state !== "CENTRAL" && s.state !== st) return false;
+    if (ct !== "ALL" && s.cat !== ct) return false;
+    if (tab === "central" && s.state !== "CENTRAL") return false;
+    if (tab === "state" && s.state === "CENTRAL") return false;
+    if (q){
+      const hay = [s.name, s.summary, ...s.benefits, ...s.eligibility, STATES[s.state]?.en || "", CATS[s.cat].en].join(" ").toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function renderGrid(){
+  const T = t();
+  const list = getFiltered();
+  $("count").textContent = T.count(list.length);
+  if (!list.length){
+    $("grid").innerHTML = `<div class="empty">${esc(T.none)}</div>`;
+    return;
+  }
+  $("grid").innerHTML = list.map(s => {
+    const isC = s.state === "CENTRAL";
+    const badge = isC ? T.badgeC : STATES[s.state][lang];
+    return `<article class="card" data-id="${s.id}" tabindex="0">
+      <div class="tags">
+        <span class="tag ${isC ? "" : "state"}">${esc(badge)}</span>
+        <span class="tag cat">${esc(CATS[s.cat][lang])}</span>
+      </div>
+      <h3>${esc(s.name)}</h3>
+      <p>${esc(s.summary)}</p>
+      <span class="more">${esc(T.eli)} · ${esc(T.doc)} →</span>
+    </article>`;
+  }).join("");
+}
+
+/* ---- modal ---- */
+let openId = null;
+function fillList(el, items){ el.innerHTML = items.map(i => `<li>${esc(i)}</li>`).join(""); }
+
+function openScheme(id){
+  const s = SCHEMES.find(x => x.id === id);
+  if (!s) return;
+  const T = t();
+  openId = id;
+  const isC = s.state === "CENTRAL";
+  $("m-tags").innerHTML =
+    `<span class="tag ${isC ? "" : "state"}">${esc(isC ? T.badgeC : STATES[s.state][lang])}</span>` +
+    `<span class="tag cat">${esc(CATS[s.cat][lang])}</span>`;
+  $("m-title").textContent = s.name;
+  $("m-sum").textContent = s.summary;
+  fillList($("m-ben"), s.benefits);
+  fillList($("m-eli"), s.eligibility);
+  fillList($("m-doc"), s.documents);
+  $("m-portal").href = s.portal;
+  $("m-copy").textContent = T.copy;
+  $("overlay").classList.add("open");
+  try { history.replaceState(null, "", "#" + id); } catch(e){}
+}
+
+function closeScheme(){
+  $("overlay").classList.remove("open");
+  openId = null;
+  try { history.replaceState(null, "", location.pathname + location.search); } catch(e){}
+}
+
+/* ---- events ---- */
+$("grid").addEventListener("click", e => {
+  const card = e.target.closest(".card");
+  if (card) openScheme(card.dataset.id);
+});
+$("grid").addEventListener("keydown", e => {
+  if (e.key === "Enter"){
+    const card = e.target.closest(".card");
+    if (card) openScheme(card.dataset.id);
+  }
+});
+$("close").addEventListener("click", closeScheme);
+$("overlay").addEventListener("click", e => { if (e.target === $("overlay")) closeScheme(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeScheme(); });
+
+["state","cat"].forEach(id => $(id).addEventListener("change", renderGrid));
+$("q").addEventListener("input", renderGrid);
+
+$("tabs").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  tab = b.dataset.t;
+  $("tabs").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  renderGrid();
+});
+
+$("reset").addEventListener("click", () => {
+  $("state").value = "ALL";
+  $("cat").value = "ALL";
+  $("q").value = "";
+  tab = "all";
+  $("tabs").querySelectorAll("button").forEach(x => x.classList.toggle("on", x.dataset.t === "all"));
+  renderGrid();
+});
+
+$("lang").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  lang = b.dataset.l;
+  try { localStorage.setItem("sarkari_lang", lang); } catch(err){}
+  renderStatic();
+  renderSelects();
+  renderGrid();
+  if (openId) openScheme(openId);
+});
+
+$("m-copy").addEventListener("click", async () => {
+  const url = location.origin + location.pathname + "#" + openId;
+  try {
+    await navigator.clipboard.writeText(url);
+  } catch(e){
+    const ta = document.createElement("textarea");
+    ta.value = url; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch(err){}
+    document.body.removeChild(ta);
+  }
+  $("m-copy").textContent = t().copied;
+  setTimeout(() => { if (openId) $("m-copy").textContent = t().copy; }, 1500);
+});
+
+/* ---- start ---- */
+renderStatic();
+renderSelects();
+renderGrid();
+if (location.hash.length > 1) openScheme(decodeURIComponent(location.hash.slice(1)));
+</script>
+</body>
+</html>
